@@ -1,2 +1,12 @@
 # kindle-ftp-server
-ftp server for kindle and koreader
+ftp server for kindle-kual and koreader
+非常草率的把源码简单的放进来了
+
+kindle目录下的是原生系统中kual的插件版本，可以在屏幕顶端正中间显示ftp连接，和kill信息
+ftpmanager.koplugin目录下是koreader的版本，可以在koreader中开启、关闭或显示ftp服务的状态。
+
+本程序目前仅在kindle voyage进行测试，其他设备请自行测试，其中koreader插件也仅在kv上进行测试，估计只能在kindle设备中正常使用，kobo、android等其它koreader客户端请勿随意尝试。
+预测能在所有300ppi的6英寸kindle上正常运行，其它分辨率或尺寸的设备或新硬件的kindle设备请自行测试能否使用。
+
+本程序的原理是调用kindle自带的busybox中内置的ftpd程序开启ftp服务端。
+仅限本地局域网使用，公网访问服务请自行承担风险。
