@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "name": "FTP服务器",
+      "priority": 1,
+      "items": [
+        {
+          "name": "启动FTP服务",
+          "priority": 1,
+          "action": "./start.sh",
+          "status": "Starting FTP..."
+        },
+        {
+          "name": "关闭FTP",
+          "priority": 2,
+          "action": "./stop.sh",
+          "status": "Stopping FTP..."
+        }
+      ]
+    }
+  ]
+}
