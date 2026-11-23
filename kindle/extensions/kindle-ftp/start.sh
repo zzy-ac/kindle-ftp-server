@@ -7,16 +7,22 @@ pkill -9 -f "ftp_daemon.sh" 2>/dev/null
 fuser -k 21/tcp 2>/dev/null
 sleep 1
 
-# 2. 启动 FTP 服务
+# 2. 放行 21 端口（防火墙设置）
+# 先尝试删除可能残留的同名规则（避免重复添加），再插入新规则放行
+iptables -D INPUT -p tcp --dport 21 -j ACCEPT 2>/dev/null
+iptables -I INPUT -p tcp --dport 21 -j ACCEPT 2>/dev/null
+
+# 3. 启动 FTP 服务
 busybox tcpsvd 0 21 busybox ftpd -w -a root "$SHARE_DIR" &
 sleep 1
 
-# 3. 获取 IP
+# 4. 获取 IP
 IP=$(ifconfig wlan0 2>/dev/null | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}')
 if [ -z "$IP" ]; then
     IP=$(ifconfig wlan0 2>/dev/null | grep "inet " | awk '{print $2}' | cut -d: -f2)
 fi
 
+# 5. 检测服务状态并常驻显示
 if netstat -tln 2>/dev/null | grep -q ":21 "; then
     # 禁止休眠
     lipc-set-prop com.lab126.powerd preventScreenSaver 1
