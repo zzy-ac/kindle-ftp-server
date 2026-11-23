@@ -12,11 +12,14 @@ sleep 1
 # 3. 恢复系统休眠
 lipc-set-prop com.lab126.powerd preventScreenSaver 0
 
-# 4. 此时后台循环绝对已经死了，现在写 3 秒 killall
+# 4. 关闭防火墙的 21 端口放行（撤销规则）
+iptables -D INPUT -p tcp --dport 21 -j ACCEPT 2>/dev/null
+
+# 5. 此时后台循环绝对已经死了，现在写 3 秒 killall
 eips 20 1 " [ killall ftpd ]        "
 sleep 3
 
-# 5. 用超长空格覆盖，彻底擦除
+# 6. 用超长空格覆盖，彻底擦除
 eips 20 1 "                       "
 
 # 清理文件
